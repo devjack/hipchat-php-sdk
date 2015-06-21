@@ -1,10 +1,12 @@
 <?php
+use DevJack\HipChatSDK\Entity\RoomEntity;
+
 return [
     'spec' => [
         'getRoomById' => [
             'httpMethod' => 'GET',
             'uri' => 'room/{room_id}',
-            'responseModel' => "jsonResponse",
+            'responseModel' => RoomEntity::class,
             'parameters' => [
                 'room_id' => [
                     'type' => 'string',
@@ -14,7 +16,7 @@ return [
         ],
     ],
     "models" => [
-        "jsonResponse" => [
+        RoomEntity::class => [
             'type' => 'object',
             'additionalProperties' => [
                 'location' => 'json'

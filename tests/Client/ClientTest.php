@@ -12,8 +12,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase {
             'token' => getenv('HIPCHAT_TOKEN'),
         ]);
 
-        $room = $client->getRoomById(['room_id'=>'1648695']);
-        $this->assertNotEmpty($room);
+        $room = $client->getRoomById(1648695);
+        $this->assertNotEmpty($room->getName());
 
     }
 

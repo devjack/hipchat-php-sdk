@@ -2,11 +2,15 @@
 
 namespace DevJack\HipChatSDK;
 
+use DevJack\HipChatSDK\Behaviour\Feature\RoomEndpointTrait;
+use DevJack\HipChatSDK\Behaviour\RoomEndpoint;
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 
-class HipChatClient {
+class HipChatClient implements RoomEndpoint
+{
+    use RoomEndpointTrait;
 
     protected $config = [];
 
@@ -76,15 +80,25 @@ class HipChatClient {
 
     public function __call($method, $args)
     {
-        if (! $this->guzzleClient->getDescription()->hasOperation($method)) {
+        return $this->doApiCall($method, $args);
+    }
+
+    protected function doApiCall($method, $args)
+    {
+        if (!$this->guzzleClient->getDescription()->hasOperation($method)) {
             throw new \BadMethodCallException("The method $method does not exist within the SDK");
         }
 
-        $passthroughArgs = (count($args) > 0) ? $args[0] : [];
+        $result = $this->guzzleClient->$method($args);
 
-        $entityClassName = $this->spec[$method]['responseModel'];
-        $result = $this->guzzleClient->$method($passthroughArgs);
+        if(in_array($method, array_keys($this->spec))) {
+            $classname = $this->spec[$method]['responseModel'];
+            if(class_exists($classname)) {
+                $responseEntity = new $classname($result);
+                return $responseEntity;
+            }
+        }
+
         return $result;
     }
-
 }

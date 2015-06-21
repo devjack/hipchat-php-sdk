@@ -34,6 +34,12 @@ $room = $client->getRoomById(['room_id'=>'12345']);
 $this->assertNotEmpty($room);
 ```
 
+### Tests
+```bash
+HIPCHAT_TOKEN="myHipChatToken" vendor/bin/phpunit -c tests/config/phpunit.xml
+
+```
+
 ## Contributing
 
 1. Fork it!

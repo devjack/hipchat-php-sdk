@@ -1,5 +1,5 @@
 {
-    "name": "devjack/hipchat-guzzle",
+    "name": "devjack/hipchat-sdk",
     "license": "MIT",
     "description": "HipChat SDK using v2 of the HipChat API.  Built with Guzzle and Guzzle-Services.",
     "authors": [

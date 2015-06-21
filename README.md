@@ -30,14 +30,13 @@ $client = new HipChatClient([
     'token' => getenv('HIPCHAT_TOKEN'),
 ]);
 
-$room = $client->getRoomById(['room_id'=>'12345']);
-$this->assertNotEmpty($room);
+$room = $client->getRoomById( 12345 );
+echo $room->getName();
 ```
 
 ### Tests
 ```bash
 HIPCHAT_TOKEN="myHipChatToken" vendor/bin/phpunit -c tests/config/phpunit.xml
-
 ```
 
 ## Contributing
